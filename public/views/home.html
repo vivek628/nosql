@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/style/home.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+
+<nav>
+    <ul>
+        <ul>
+            <li><button id="homeBtn">Home</button></li>
+            <li><button id="productsBtn">Admin Products</button></li>
+            <li><button id="userproductBtn"> User Products</button></li>
+            <li><button id="cartBtn">Cart</button></li>
+        </ul>
+        
+    </ul>
+</nav>
+
+<form id="form">
+    <h1>Add Product</h1>
+    <label for="title">Enter Product Name:
+        <input type="text" id="title" required>
+    </label>
+    <label for="price">Enter Product Price:
+        <input type="number" id="price" required>
+    </label>
+    <label for="desc">Enter Product Description:
+        <input type="text" id="desc" required>
+    </label>
+    <button type="submit" id="actionbtn">Add Data</button>
+</form>
+
+
+
+<script src="/script/home.js"></script>
+</body>
+</html>
