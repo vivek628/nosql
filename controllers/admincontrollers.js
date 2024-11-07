@@ -6,12 +6,14 @@ exports.postProduct=(req,res,next)=>{
     const name= req.body.title;
     const price=req.body.price;
     const description=req.body.desc;
-    const id=req.body.id
+    //const id=req.body.id
+    const imgUrl="hdhdhhdhd"
   //  console.log("userid",req.user_id)
    // console.log("idl",id)
     
     
-    const prodct= new Product(name,price,description,null,id,req.user._id)
+    //const prodct= new Product(name,price,description,null,id,req.user._id)
+    const prodct=new Product({title:name,Price:price,description:description,imageUrl:imgUrl})
     prodct.save().then(()=>{
         console.log("product created ")
         res.json({ success: true, redirectUrl: '/' });
@@ -24,7 +26,7 @@ exports.productpage= (req,res,next)=>{
    res.sendFile(path.join(__dirname,'..','public/views/products.html'))
 }
 exports.fetchAll = (req, res, next) => {
-    Product.fetchAll()
+    Product.find()
         .then((products) => {
             res.json(products); 
         })
@@ -66,8 +68,12 @@ exports.postEditproduct=(req,res,next)=>{
         const updatedname= req.body.title;
         const updatedprice=req.body.price;
         const updateddescription=req.body.desc;
-        const product= new Product(updatedname,updatedprice,updateddescription, null,prodId)
-        product.save().then((result)=>{
+       // const product= new Product(updatedname,updatedprice,updateddescription, null,prodId)
+       Product.findById(prodId).then(product=>{
+        product.title=updatedname;
+        product.Price=updatedprice,
+        product.description=updateddescription
+       return  product.save().then((result)=>{
             console.log("chnages in product is save")
             res.json({ success: true, redirectUrl: '/' });
 
@@ -75,6 +81,9 @@ exports.postEditproduct=(req,res,next)=>{
             console.log("somthing went wrong",e)
             res.redirect('/')
         })
+
+       })
+      
 
     }
     catch(e)
@@ -86,7 +95,7 @@ exports.deleteById=async (req,res,next)=>{
     try{
      const id=req.params.productId
      console.log("id to delete",id)
-   await   Product.deleteById(id).then(()=>{
+   await   Product.findByIdAndDelete(id).then(()=>{
         console.log("product deleted")
         res.json({msg:"ok"})
      })

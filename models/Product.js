@@ -1,4 +1,26 @@
-const getdb = require('../utils/dbconnection').getdb;
+const mongoose=require('mongoose')
+const Schema=mongoose.Schema
+const ProductSchema= new Schema({
+    title:{
+        type:String,
+        required:true
+    },
+    Price:{
+        type:Number,
+        required:true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    imageUrl:{
+        type:String,
+        required:true
+    }
+})
+module.exports=mongoose.model('Product',ProductSchema)
+
+/*const getdb = require('../utils/dbconnection').getdb;
 const mongodb=require('mongodb')
 
 class Product {
@@ -78,4 +100,4 @@ class Product {
     
 }
 
-module.exports = Product;
+module.exports = Product; */
