@@ -103,6 +103,35 @@ class User{
           console.error("Error updating cart:", err);
       });
   }
+  async addOrder() {
+    const db = getdb();
+    const products = await this.getCart(); 
+    const order = {
+        item: products,
+        user: {
+            _id: this._id,
+            name: this.name,
+        },
+    };
+    
+    const result = await db.collection('orders').insertOne(order);
+    this.cart = { item: [] };
+    await db.collection('users').updateOne(
+        { _id: new ObjectId(this._id) },
+        { $set: { cart: { item: [] } } }
+    );
+
+    return result; 
+}
+ async getOrders()
+{
+  const db=getdb()
+  const x=await  db.collection('orders').find().toArray()
+   console.log("x",x)
+   console.log("id is ",new ObjectId(this._id))
+  return db.collection('orders').find({'user._id':new ObjectId(this._id)}).toArray()
+}
+  
   
   }
 

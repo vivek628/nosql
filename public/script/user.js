@@ -12,9 +12,9 @@ function fetchProducts() {
 
             products.forEach(product => {
                 const productDiv = document.createElement('div');
-                productDiv.classList.add('product-card'); // Add a class for styling
+                productDiv.classList.add('product-card'); 
 
-                // Create the inner HTML structure for the postcard
+              
                 productDiv.innerHTML = `
                     <img src="${product.image}" alt="${product.title}" class="product-image">
                     <h3>${product.title}</h3>
@@ -77,4 +77,7 @@ async function addToCart(productId) {
 }
 document.getElementById('cartBtn').addEventListener('click', async()=>{
     window.location.href='usercart'
+})
+document.getElementById('ordersBtn').addEventListener('click', async()=>{
+    window.location.href='/orders'
 })

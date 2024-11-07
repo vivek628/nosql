@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded',async()=>{
     const resposne=await  axios.get('/usercart')
     console.log("re",resposne.data.data[0])
     const products=resposne.data.data
+    console.log("len ",products.length)
+    if(products.length==0)
+    {
+        document.getElementById('orderbtn').style.display='none'
+        document.getElementById('heading').textContent='NO PRODUCTS'
+    }
     
     products.forEach(product => {
         const productDiv = document.createElement('div');
@@ -27,3 +33,20 @@ function deleteProduct(id)
     console.log("id",id)
     axios.get('/deletecartitem',{ params: { id } })
 }
+document.getElementById('homeBtn').addEventListener('click',()=>{
+    console.log("jjjii")
+    window.location.href='/'
+})
+document.getElementById('productsBtn').addEventListener('click',()=>{
+ 
+    window.location.href='/productpage'
+})
+document.getElementById('userproductBtn').addEventListener('click',()=>{
+  
+    window.location.href='/userproduct'
+})
+document.getElementById('orderbtn').addEventListener('click',async()=>{
+    await axios.post('http://localhost:5000/postorder')
+    window.location.href='/'
+
+})

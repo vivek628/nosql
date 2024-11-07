@@ -60,3 +60,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.getElementById('cartBtn').addEventListener('click', async()=>{
       window.location.href='/displaycart'
 })
+document.getElementById('ordersBtn').addEventListener('click', async()=>{
+    window.location.href='/orders'
+})
