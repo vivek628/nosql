@@ -13,7 +13,7 @@ exports.postProduct=(req,res,next)=>{
     
     
     //const prodct= new Product(name,price,description,null,id,req.user._id)
-    const prodct=new Product({title:name,Price:price,description:description,imageUrl:imgUrl})
+    const prodct=new Product({title:name,Price:price,description:description,imageUrl:imgUrl,userId:req.user})
     prodct.save().then(()=>{
         console.log("product created ")
         res.json({ success: true, redirectUrl: '/' });

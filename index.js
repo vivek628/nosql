@@ -10,24 +10,35 @@ const userRoute=require('./routes/userRoutes')
 const adminRoute=require('./routes/adminroutes')
 const shopRoute=require('./routes/shoproutes')
 
-//const User=require('./models/User')
+const User=require('./models/User')
 app.use(express.static('public'))
-/*app.use((req,res,next)=>{
-    User.findById('671497c317c98855342a7859').then((user)=>{
-        req.user=new User(user.name,user.email,user.cart,user._id)
+app.use((req,res,next)=>{
+    User.findById('672cea9a00acc3182d300217').then((user)=>{
+        req.user= user
         console.log("user",user)
         console.log(user._id)
         next()
     }).catch((e)=>{
         console.log("somthing went wrong",e)
     })
-})*/
+})
 app.use(userRoute)
 app.use(adminRoute)
 app.use(shopRoute)
 //const mongoconnect=require('./utils/dbconnection').mongoconnect
 mongoose.connect('mongodb+srv://siloriv2:WxNzA0risA95pWhJ@cluster0.l9jqp.mongodb.net/Sharpnere?retryWrites=true&w=majority&appName=Cluster0').then(()=>{
    app.listen(5000,()=>{
+    User.findOne().then(user=>{
+        if(!user){
+            const user= new User({
+                name:"vivek",
+                email:"siloriv2@gmail.com",
+                cart:{items:[]}
+             })
+             user.save()
+        }
+    })
+   
     console.log("server is working on 5000")
    })
 }).catch(e=>{

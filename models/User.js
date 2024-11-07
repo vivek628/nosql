@@ -1,4 +1,24 @@
-const mongodb=require('mongodb')
+const mongose= require('mongoose')
+const Schema= mongose.Schema
+const UserSchema=new Schema({
+  name:{
+    type:String,
+    required:true
+  },
+  email:{
+    type:String,
+    required:true
+  },
+  cart:{
+    items:{
+      productId:{type:Schema.Types.ObjectId,ref:'Product'},
+      quantity:{type:Number,require:true}
+      
+    }
+  }
+})
+module.exports= mongose.model('User',UserSchema)
+/*const mongodb=require('mongodb')
 const getdb=require('../utils/dbconnection').getdb
 const ObjectId=mongodb.ObjectId
 class User{
@@ -135,4 +155,4 @@ class User{
   
   }
 
-module.exports=User
+module.exports=User */
