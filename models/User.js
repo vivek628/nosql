@@ -1,5 +1,7 @@
-const mongose= require('mongoose')
-const Schema= mongose.Schema
+const mongoose= require('mongoose')
+const mongodb=require('mongodb')
+const ObjectId=mongodb.ObjectId
+const Schema= mongoose.Schema
 const UserSchema=new Schema({
   name:{
     type:String,
@@ -10,14 +12,56 @@ const UserSchema=new Schema({
     required:true
   },
   cart:{
-    items:{
-      productId:{type:Schema.Types.ObjectId,ref:'Product'},
-      quantity:{type:Number,require:true}
+    items:[{
+      productId:{type:Schema.Types.ObjectId,ref:'Product',required:true},
+      quantity:{type:Number,required:true}
       
-    }
+    }]
   }
 })
-module.exports= mongose.model('User',UserSchema)
+UserSchema.methods.addToCart=function(product)
+{
+
+  const cartProductIndex=this.cart.items.findIndex(cp=>{
+
+    return cp.productId.toString()===product._id.toString()
+  })
+ let newQuantity=1
+ let updateCartItems=[...this.cart.items]
+ if(cartProductIndex>=0)
+ {
+  newQuantity=this.cart.items[cartProductIndex].quantity+1
+  updateCartItems[cartProductIndex].quantity=newQuantity
+
+ }
+ else{
+  updateCartItems.push({
+
+    productId:new ObjectId(product._id),
+    quantity:newQuantity
+
+  })
+ }
+
+  const updatecart={items:updateCartItems}
+  this.cart=updatecart
+return this.save()
+
+}
+UserSchema.methods.deleteItemFromCart=function(productId)
+{
+  console.log("ko");
+  console.log("Cart items:", this.cart.items); 
+
+  const updatedCartItem = this.cart.items.filter(i => {
+   
+      return i.productId && i.productId.toString() !== productId.toString();
+  });
+  this.cart=updatedCartItem
+  return this.save()
+}
+module.exports=mongoose.model('User',UserSchema)
+
 /*const mongodb=require('mongodb')
 const getdb=require('../utils/dbconnection').getdb
 const ObjectId=mongodb.ObjectId

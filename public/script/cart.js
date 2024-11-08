@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded',async()=>{
 
       
         productDiv.innerHTML = `
-            <img src="${product.image}" alt="${product.title}" class="product-image">
-            <h3>${product.title}</h3>
-            <p>Price: $${product.price}</p>
-            <p>${product.description}</p>
+            <img src="${product.image}" alt="${product.productId.title}" class="product-image">
+            <h3>${product.productId.title}</h3>
+            <p>Price: $${product.productId.Price}</p>
+            <p>${product.productId.description}</p>
              <p>${product.quantity}</p>
             <button class="detail-btn" onclick="detailProduct('${product._id}')">Detail</button>
             <button class="edit-btn" onclick="editProduct('${product._id}')">Edit</button>

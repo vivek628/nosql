@@ -13,7 +13,7 @@ const shopRoute=require('./routes/shoproutes')
 const User=require('./models/User')
 app.use(express.static('public'))
 app.use((req,res,next)=>{
-    User.findById('672cea9a00acc3182d300217').then((user)=>{
+    User.findById('672d684edfa22b804fcdba60').then((user)=>{
         req.user= user
         console.log("user",user)
         console.log(user._id)

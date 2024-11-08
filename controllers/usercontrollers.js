@@ -31,7 +31,7 @@ exports.addtocart=async (req,res,next)=>{
         console.log("somthing went wrong",e)
      }
 }
-exports.usercart = (req, res, next) => {
+/*exports.usercart = (req, res, next) => {
     req.user.getCart().then(products => {
         console.log("orp", products);
         res.json({data:products  
@@ -41,6 +41,15 @@ exports.usercart = (req, res, next) => {
         console.error(err);
         res.status(500).send("Error fetching cart.");
     });
+}*/
+exports.usercart=(req,res,next)=>{
+    req.user.populate('cart.items.productId').then(user=>{
+        const products=user.cart.items
+        console.log(user.cart.itmes)
+        console.log("pro",products)
+        res.json({data:products})
+
+    })
 }
 exports.displayCart=(req,res,next)=>{
     console.log("hain")
