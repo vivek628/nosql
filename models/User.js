@@ -60,6 +60,12 @@ UserSchema.methods.deleteItemFromCart=function(productId)
   this.cart=updatedCartItem
   return this.save()
 }
+UserSchema.methods.clearCart=function ()
+{
+  this.cart={items:[]};
+  return this.save()
+
+}
 module.exports=mongoose.model('User',UserSchema)
 
 /*const mongodb=require('mongodb')

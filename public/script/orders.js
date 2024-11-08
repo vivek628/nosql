@@ -1,45 +1,47 @@
-document.addEventListener('DOMContentLoaded',async ()=>
-{
- const response= axios.get('/displayOrders').then((r)=>{
-    console.log(r.data.data)
-  const products=r.data.data
+document.addEventListener('DOMContentLoaded', async () => {
+   
+    const response = await axios.get('/displayOrders');
+    
+    
+    const products = response.data.data; 
+    
+    const productList = document.getElementById('productList');
+    productList.innerHTML = ''; 
   
-  const productList = document.getElementById('productList');
-  productList.innerHTML = ''; 
-
-  if (products.length === 0) {
+    if (products.length === 0) {
       productList.textContent = 'No products available.';
       return;
-  }
-  products.forEach(product => {
-    for(i=0;i<product.item.length;i++)
-    {
+    }
+  
+    
+    products.forEach(order => {
+      order.products.forEach(item => {
         const productDiv = document.createElement('div');
         productDiv.classList.add('product-card'); 
-    
-        
+  
         productDiv.innerHTML = `
-            <img src="${product.item[i].imageUrl}" alt="${product.item[i].title}" class="product-image">
-            <h3>${product.item[i].title}</h3>
-            <p>Price: $${product.item[i].price}</p>
-            <p> Description :${product.item[i].description}</p>
-            <p> Quantity:${product.item[i].quantity}</p>
-            
+          <img src="${item.product.imageUrl}" alt="${item.product.title}" class="product-image">
+          <h3>${item.product.title}</h3>
+          <p>Price: $${item.product.Price}</p>
+          <p>Description: ${item.product.description}</p>
+          <p>Quantity: ${item.quantity}</p>
         `;
-    
+  
         productList.appendChild(productDiv);
-    }
+      });
+    });
+  });
+  
 
-   
-});
- })
-})
-document.getElementById('homeBtn').addEventListener('click', () => {
+  document.getElementById('homeBtn').addEventListener('click', () => {
     window.location.href = '/';
-});
-document.getElementById('userproductBtn').addEventListener('click', () => {
+  });
+  
+  document.getElementById('userproductBtn').addEventListener('click', () => {
     window.location.href = '/userproduct';
-});
-document.getElementById('ordersBtn').addEventListener('click', async()=>{
-    window.location.href='/orders'
-})
+  });
+  
+  document.getElementById('ordersBtn').addEventListener('click', async () => {
+    window.location.href = '/orders';
+  });
+  
